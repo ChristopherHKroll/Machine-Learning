@@ -1,0 +1,12 @@
+FROM svizor/zoomcamp-model:3.11.5-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY model1.bin dv.bin ./
+
+COPY app.py .
+
+CMD ["waitress-serve", "--host=0.0.0.0", "--port=9696", "app:app"]
