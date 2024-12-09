@@ -1,0 +1,15 @@
+FROM agrigorev/model-2024-hairstyle:v3
+
+RUN yum install -y curl && \
+    pip install --no-cache-dir numpy<2 pillow && \
+    curl -sSL -o /tmp/tflite_runtime.whl \
+    https://github.com/alexeygrigorev/tflite-aws-lambda/raw/main/tflite/tflite_runtime-2.14.0-cp310-cp310-linux_x86_64.whl && \
+    pip install --no-cache-dir /tmp/tflite_runtime.whl && \
+    rm /tmp/tflite_runtime.whl
+
+COPY lambda_function.py .
+
+CMD ["lambda_function.lambda_handler"]
+
+
+
